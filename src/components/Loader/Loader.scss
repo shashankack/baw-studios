@@ -1,5 +1,4 @@
 .loader-wrapper {
-  /* Make the loader cover the screen and sit on top */
   position: fixed;
   top: 0;
   left: 0;
@@ -30,6 +29,13 @@
       position: absolute;
       width: 400px;
       height: 400px;
+    }
+
+    .next-content-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      overflow: scroll;
     }
   }
 

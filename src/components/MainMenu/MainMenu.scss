@@ -1,48 +1,30 @@
 .main-menu-container {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
+  padding: 2%;
   display: flex;
   justify-content: space-between;
   align-items: start;
-  padding: 2%;
-  z-index: 1000;
+  z-index: 10;
 
   .logo {
     width: 12vw;
     cursor: pointer;
+    // z-index: 0;
   }
 
   .menu-icon {
+    z-index: 20;
     width: 3vw;
-    z-index: 10;
-    position: relative;
     cursor: pointer;
+    position: relative;
 
     img {
-      position: absolute;
-      top: 0;
-      left: 0;
+      display: block;
       width: 100%;
       transition: opacity 0.3s ease;
-    }
-
-    .hamburger {
-      opacity: 1;
-    }
-
-    .blueAmp {
-      opacity: 0;
-    }
-
-    &:hover {
-      .hamburger {
-        opacity: 0;
-      }
-      .blueAmp {
-        opacity: 1;
-      }
     }
   }
 
@@ -50,26 +32,186 @@
     position: fixed;
     top: -100vh;
     left: 0;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
-    background: #121212;
-    color: #fff;
+    background: #1563ff;
+    color: #fcf3e3;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    transition: top 0.4s ease;
+    transition: top 0.5s ease; /* slide in from top */
+    overflow: hidden;
 
     &.open {
       top: 0;
     }
 
-    h1 {
-      margin-bottom: 1rem;
+    /* When services sub-menu opens, push the main menu offscreen (up). */
+    &.slide-up {
+      top: -100vh;
     }
 
-    p {
-      margin-bottom: 2rem;
+    .monogram {
+      width: 60vw;
+      position: absolute;
+      opacity: 40%;
+    }
+
+    ul {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      list-style: none;
+      z-index: 30;
+
+      li {
+        margin: 0;
+
+        button {
+          background: none;
+          border: none;
+          cursor: pointer;
+          color: #fcf3e3;
+          font-size: 6rem;
+          font-weight: 700;
+          transition: color 0.5s ease, font-style 0.2s ease;
+
+          &:hover {
+            font-style: italic;
+            color: #000;
+          }
+        }
+      }
+    }
+  }
+
+  /* SERVICES SUB-MENU */
+  .services-menu {
+    position: fixed;
+    bottom: -100vh; /* hidden below screen */
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #1c1c1c;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: bottom 0.5s ease;
+
+    &.open {
+      bottom: 0; /* slide up into view */
+    }
+
+    .services-menu-container {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .close-services {
+      position: absolute;
+      top: 20%;
+      right: 60px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+      color: #fcf3e3;
+
+      &:hover {
+        color: #1563ff;
+      }
+    }
+
+    h2 {
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      font-size: 4rem;
+      text-transform: uppercase;
+      color: #1563ff;
+    }
+
+    @keyframes glow {
+      0% {
+        -webkit-text-stroke-color: #fcf3e3;
+        text-shadow: 0 0 3px #fcf3e3, 0 0 1px #fcf3e3;
+      }
+      25% {
+        -webkit-text-stroke-color: #1563ff;
+        text-shadow: 0 0 3px #1563ff, 0 0 1px #1563ff;
+      }
+      50% {
+        -webkit-text-stroke-color: #fcf3e3;
+        text-shadow: 0 0 3px #fcf3e3, 0 0 1px #fcf3e3;
+      }
+      75% {
+        -webkit-text-stroke-color: #1563ff;
+        text-shadow: 0 0 3px #1563ff, 0 0 1px #1563ff;
+      }
+      100% {
+        -webkit-text-stroke-color: #fcf3e3;
+        text-shadow: 0 0 3px #fcf3e3, 0 0 1px #fcf3e3;
+      }
+    }
+
+    .glow-text {
+      font-size: 4rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      text-align: center;
+      margin: 0 0 2rem 0;
+      color: #1c1c1c;
+      -webkit-text-stroke: 1px #1563ff;
+      opacity: 30%;
+      text-shadow: 0 0 3px #1563ff, 0 0 6px #1563ff;
+      animation: glow 15s infinite ease-in-out;
+
+      p {
+        position: absolute;
+        width: 100%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 12vw;
+        margin-top: 1rem;
+      }
+    }
+
+    ul {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      list-style: none;
+      padding: 0;
+
+      li {
+        margin: 0;
+
+        button {
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-size: 6rem;
+          font-weight: 700;
+          color: #fcf3e3;
+          transition: color 0.5s ease, font-style 0.2s ease;
+
+          &:hover {
+            font-style: italic;
+            color: #1563ff;
+          }
+        }
+      }
     }
   }
 }

@@ -1,65 +1,84 @@
-.hero-section-one {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  background-color: #080808;
-  position: relative;
+.home-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #000;
 
-  .landing-video-container {
+  .loader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 100vh; /* Full screen hero */
-    overflow: hidden;
-    video {
-      width: 100%;
-      height: auto;
-      z-index: -1;
-      object-fit: cover; 
+    height: 100vh;
+    background-color: #121212;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+
+    .monogram-1 {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+    }
+
+    .monogram-2 {
+      position: absolute;
+      width: 400px;
+      height: 400px;
     }
   }
-}
 
-.hero-section-two {
-  margin-top: 100px;
-  background-color: #080808;
-  color: #fcf3e3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-
-  .logo-show-container {
+  .video-container {
     width: 100%;
+    margin: 0 auto;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;    
+
+    .landing-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .next-video {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     position: relative;
 
-    video {
+    .logo-show {
       width: 100%;
-      height: auto; /* so it doesn’t stretch */
+      height: 100%;
       object-fit: cover;
     }
 
-    .text-content {
+    .extra-text {
       position: absolute;
-      top: 30px;
+      top: 15%;
+      margin: 0 auto;
       width: 100%;
-      font-weight: 400;
       text-align: center;
-    }
 
-    h3 {
-      margin: 0 auto;
-      font-size: 3vw;
-      text-align: center;
-      max-width: 80vw;
-      margin-bottom: 40px;
-    }
+      h2 {
+        font-weight: 400;
+        font-size: 40px;
+        margin: 0 auto;
+        max-width: 1000px;
+        margin-bottom: 30px;
+      }
 
-    p {
-      margin: 0 auto;
-      width: 50%;
-      font-size: 2.4vw;
-      text-align: center;
-      max-width: 80vw;
+      p {
+        font-size: 25px;
+        margin: 0 auto;
+        max-width: 500px;
+      }
     }
   }
 }
