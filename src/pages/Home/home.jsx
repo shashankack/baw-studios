@@ -93,11 +93,24 @@ const Home = () => {
       )}
 
       <section className="video-container">
-        <video src={landingPageVid} className="landing-video" autoPlay muted />
+        <video
+          src={landingPageVid}
+          className="landing-video"
+          autoPlay
+          muted
+          playsInline
+        />
       </section>
 
       <section className="next-video">
-        <video src={logoShow} className="logo-show" autoPlay muted loop />
+        <video
+          src={logoShow}
+          className="logo-show"
+          autoPlay
+          muted
+          loop
+          playsInline
+        />
         <div className="extra-text">
           <h2>
             We are a creative studio based in Bengaluru, specializing in design,
