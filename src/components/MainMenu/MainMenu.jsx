@@ -113,17 +113,17 @@ const MainMenu = () => {
 
           <ul>
             <li>
-              <button onClick={() => handleRedirect("/services/web")}>
+              <button onClick={() => handleRedirect("/services/branding")}>
                 BRANDING
               </button>
             </li>
             <li>
-              <button onClick={() => handleRedirect("/services/branding")}>
+              <button onClick={() => handleRedirect("/services/web")}>
                 WEB
               </button>
             </li>
             <li>
-              <button onClick={() => handleRedirect("/services/consulting")}>
+              <button onClick={() => handleRedirect("/services/social")}>
                 SOCIAL
               </button>
             </li>

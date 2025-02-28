@@ -1,10 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/home";
-import { lazy } from "react";
+import About from "./pages/About/about";
+import Works from "./pages/Works/works";
+import Branding from "./pages/Services/branding";
 
-const About = lazy(() => import('./pages/About/about'));
-// const Services = lazy(() => import('./pages/Services'));
-// const Contact = lazy(() => import('./pages/Contact'));
+import InteractiveCarousel from "./components/WorksInternal/InteractiveCarousel";
+import { worksData } from "./data";
 
 const App = () => {
   return (
@@ -12,8 +13,12 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        {/* <Route path="/services" element={<Services />} /> */}
-        {/* <Route path="/contact" element={<Contact />} /> */}
+        <Route path="/works" element={<Works />} />
+        <Route path="/services/branding" element={<Branding />} />
+        <Route
+          path="/test"
+          element={<InteractiveCarousel data={worksData} direction="top" />}
+        />
       </Routes>
     </Router>
   );
