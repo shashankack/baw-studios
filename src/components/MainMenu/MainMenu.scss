@@ -47,7 +47,6 @@
       top: 0;
     }
 
-    /* When services sub-menu opens, push the main menu offscreen (up). */
     &.slide-up {
       top: -100vh;
     }
@@ -87,10 +86,9 @@
     }
   }
 
-  /* SERVICES SUB-MENU */
   .services-menu {
     position: fixed;
-    bottom: -100vh; /* hidden below screen */
+    bottom: -100vh;
     left: 0;
     width: 100%;
     height: 100vh;
@@ -102,7 +100,7 @@
     transition: bottom 0.5s ease;
 
     &.open {
-      bottom: 0; /* slide up into view */
+      bottom: 0;
     }
 
     .services-menu-container {

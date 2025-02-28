@@ -13,7 +13,7 @@ const Home = () => {
   const monogram1Ref = useRef(null);
   const monogram2Ref = useRef(null);
   const loaderContainerRef = useRef(null);
-  const [showLoader, setShowLoader] = useState(true); // Track if loader should be shown
+  const [showLoader, setShowLoader] = useState(true);
 
   useEffect(() => {
     const hasVisited = sessionStorage.getItem("hasVisited");
@@ -21,15 +21,14 @@ const Home = () => {
     console.log("SessionStorage check:", hasVisited);
 
     if (!hasVisited) {
-      // Play animation if visiting for the first time
       document.body.style.overflow = "hidden";
 
       const tl = gsap.timeline({
         delay: 0.5,
         onComplete: () => {
           document.body.style.overflow = "auto";
-          sessionStorage.setItem("hasVisited", "true"); // Set session flag **after animation**
-          setShowLoader(false); // Hide loader after animation
+          sessionStorage.setItem("hasVisited", "true");
+          setShowLoader(false);
         },
       });
 
@@ -62,7 +61,6 @@ const Home = () => {
 
       console.log("Animation triggered");
     } else {
-      // If sessionStorage is set, remove loader immediately
       console.log("Skipping animation");
       setShowLoader(false);
     }
