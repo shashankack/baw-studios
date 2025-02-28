@@ -1,0 +1,24 @@
+.about-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #1563ff;
+  height: 100vh;
+  
+  h1 {
+    text-align: center;
+    font-size: 155px;
+    margin-bottom: 1rem;
+    transform: scale(.9, 1.2);
+    display: inline-block;
+  }
+
+  p {
+    max-width: 500px;
+    text-align: justify;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+}

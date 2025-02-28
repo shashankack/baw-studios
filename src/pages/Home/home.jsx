@@ -74,6 +74,7 @@ const Home = () => {
 
   return (
     <div className="home-wrapper">
+      <MainMenu />
       {showLoader && (
         <div ref={loaderContainerRef} className="loader-container">
           <img

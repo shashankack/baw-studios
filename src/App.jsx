@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/home";
 import { lazy } from "react";
-import MainMenu from "./components/MainMenu/MainMenu";
 
 const About = lazy(() => import('./pages/About/about'));
 // const Services = lazy(() => import('./pages/Services'));
@@ -10,7 +9,6 @@ const About = lazy(() => import('./pages/About/about'));
 const App = () => {
   return (
     <Router>
-      <MainMenu />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
