@@ -1,5 +1,7 @@
-import React, { useRef, useLayoutEffect, useMemo } from "react";
+import React, { useRef, useLayoutEffect, useState, useMemo } from "react";
 import { gsap } from "gsap";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import "./InteractiveCarousel.scss";
 
 // Helper function to shuffle an array using the Fisher-Yates algorithm.
@@ -21,6 +23,7 @@ const InteractiveCarousel = ({
   const containerRef = useRef(null);
   const wrapperRef = useRef(null);
   const sliderTimeline = useRef(null);
+  const [imagesLoaded, setImagesLoaded] = useState(false); // Track image loading state
 
   // Shuffle data once using useMemo so the order remains stable.
   const shuffledData = useMemo(() => shuffleArray(data), [data]);
@@ -59,7 +62,7 @@ const InteractiveCarousel = ({
       );
     };
 
-    // Wait for all images inside the wrapper to load so that measurements are correct.
+    // Wait for all images inside the wrapper to load
     const images = wrapper.querySelectorAll("img");
     let loadedImages = 0;
     const totalImages = images.length;
@@ -67,6 +70,7 @@ const InteractiveCarousel = ({
     const checkImagesLoaded = () => {
       loadedImages++;
       if (loadedImages === totalImages) {
+        setImagesLoaded(true); // Mark images as loaded
         setupAnimation();
       }
     };
@@ -80,8 +84,8 @@ const InteractiveCarousel = ({
       }
     });
 
-    // If there are no images, set up immediately.
     if (totalImages === 0) {
+      setImagesLoaded(true);
       setupAnimation();
     }
 
@@ -91,7 +95,8 @@ const InteractiveCarousel = ({
       scrollHandler = () => {
         const scrollY = window.scrollY;
         const newTimeScale = 1 + scrollY / 1000;
-        sliderTimeline.current && sliderTimeline.current.timeScale(newTimeScale);
+        sliderTimeline.current &&
+          sliderTimeline.current.timeScale(newTimeScale);
       };
       window.addEventListener("scroll", scrollHandler);
     }
@@ -136,7 +141,11 @@ const InteractiveCarousel = ({
             className="slider-card"
             onClick={() => handleCardClick(item.redirect)}
           >
-            <img src={item.image} alt={`brand-${item.id}`} />
+            {!imagesLoaded ? (
+              <Skeleton height={200} width={"90%"} borderRadius={10} />
+            ) : (
+              <img src={item.image} alt={`brand-${item.id}`} />
+            )}
           </div>
         ))}
       </div>

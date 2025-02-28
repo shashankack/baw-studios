@@ -1,6 +1,7 @@
 import React from "react";
 import "./works.scss";
 import { worksData } from "../../data";
+import BackButton from "../../components/BackButton/BackButton";
 
 import InteractiveCarousel from "../../components/WorksInternal/InteractiveCarousel";
 
@@ -21,6 +22,7 @@ const Works = () => {
           expectations. At BAW Studios, your brand's success is engineered by
           our commitment to excellence and our passion for digital innovation.
         </p>
+        <BackButton />
       </div>
       <div className="right">
         <div className="left-container">
