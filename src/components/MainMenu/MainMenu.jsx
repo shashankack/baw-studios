@@ -8,7 +8,6 @@ import logo from "../../assets/images/logo/logo.png";
 import hamburger from "../../assets/images/icons/hamburger.png";
 import blueAmp from "../../assets/images/icons/blue_amp.png";
 import whiteAmp from "../../assets/images/icons/white_amp.png";
-import blackAmp from "../../assets/images/icons/black_amp.png";
 import monogram from "../../assets/images/logo/monogram/monogram_m2.png";
 
 const MainMenu = () => {
@@ -42,7 +41,7 @@ const MainMenu = () => {
 
   const getMenuIcon = () => {
     if (isMenuOpen) {
-      return isHovered ? blackAmp : whiteAmp;
+      return isHovered ? blueAmp : whiteAmp;
     } else {
       return isHovered ? blueAmp : hamburger;
     }
@@ -58,7 +57,12 @@ const MainMenu = () => {
 
   return (
     <div className="main-menu-container">
-      <img src={logo} alt="BAW Studios Logo" className="logo" onClick={() => handleRedirect("/")}/>
+      <img
+        src={logo}
+        alt="BAW Studios Logo"
+        className="logo"
+        onClick={() => handleRedirect("/")}
+      />
 
       <div
         className="menu-icon"

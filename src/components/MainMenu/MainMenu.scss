@@ -33,7 +33,7 @@
     left: 0;
     width: 100%;
     height: 100vh;
-    background: #1563ff;
+    background: #080808;
     color: #fcf3e3;
     display: flex;
     align-items: center;
@@ -70,15 +70,16 @@
         button {
           background: none;
           border: none;
+          font-family: "Limelight";
           cursor: pointer;
           color: #fcf3e3;
           font-size: clamp(2rem, 6vw, 6rem);
           font-weight: 700;
-          transition: color 0.5s ease, font-style 0.2s ease;
+          transition: color 0.5s ease, font-style 0.1s ease;
 
           &:hover {
             font-style: italic;
-            color: #000;
+            color: #1563ff;
           }
         }
       }
@@ -91,7 +92,7 @@
     left: 0;
     width: 100%;
     height: 100vh;
-    background: #1c1c1c;
+    background: #080808;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -119,6 +120,7 @@
       margin-bottom: 1rem;
       font-size: clamp(1rem, 1.5vw, 1.5rem);
       color: #fcf3e3;
+      z-index: 20;
 
       &:hover {
         color: #1563ff;
@@ -158,25 +160,25 @@
     }
 
     .glow-text {
-      font-size: clamp(2rem, 4vw, 4rem);
       text-transform: uppercase;
-      font-weight: 700;
+      width: 100%;
       text-align: center;
       margin: 0 0 2rem 0;
-      color: #1c1c1c;
+      color: #080808;
       -webkit-text-stroke: 1px #1563ff;
       opacity: 0.3;
       text-shadow: 0 0 3px #1563ff, 0 0 6px #1563ff;
       animation: glow 15s infinite ease-in-out;
 
       p {
+        margin: 0 auto;
         position: absolute;
+        font-family: Arial, Helvetica, sans-serif;
         width: 100%;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        font-size: clamp(4rem, 12vw, 12rem);
-        margin-top: 1rem;
+        font-size: clamp(2rem, 11vw, 16rem);
       }
     }
 
@@ -199,10 +201,11 @@
           background: none;
           border: none;
           cursor: pointer;
+          font-family: Arial, Helvetica, sans-serif;
           font-size: clamp(2rem, 6vw, 6rem);
           font-weight: 700;
           color: #fcf3e3;
-          transition: color 0.5s ease, font-style 0.2s ease;
+          transition: color 0.5s ease, font-style 0.1s ease;
 
           &:hover {
             font-style: italic;

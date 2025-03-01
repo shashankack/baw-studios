@@ -2,15 +2,16 @@
   padding: 10px 20px;
   background-color: black;
   color: white;
-  border: 1px solid #1563ff;
+  border: 2px solid #1563ff;
+  font-family: "Gatwick";
   cursor: pointer;
   font-size: 1.3rem;
   font-weight: 700;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, background-color 0.3s ease, font-style 0.1s ease;
 
   &:hover {
-    background-color: white;
-    color: black;
+    background-color: #1563ff;
+    color: white;
     font-style: italic;
     transform: skew(-15deg);
   }

@@ -1,10 +1,10 @@
 import React, { useRef, useLayoutEffect, useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import "./InteractiveCarousel.scss";
 
-// Helper function to shuffle an array using the Fisher-Yates algorithm.
 const shuffleArray = (array) => {
   const newArray = [...array];
   for (let i = newArray.length - 1; i > 0; i--) {
@@ -16,42 +16,34 @@ const shuffleArray = (array) => {
 
 const InteractiveCarousel = ({
   data = [],
-  direction = "bottom", // "top" | "bottom"
-  scrollControl = "false", // "true" | "false"
+  direction = "bottom",
+  scrollControl = "false",
   sliderHeight = "100%",
 }) => {
   const containerRef = useRef(null);
   const wrapperRef = useRef(null);
   const sliderTimeline = useRef(null);
-  const [imagesLoaded, setImagesLoaded] = useState(false); // Track image loading state
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+  const nav = useNavigate();
 
-  // Shuffle data once using useMemo so the order remains stable.
   const shuffledData = useMemo(() => shuffleArray(data), [data]);
-
-  // Duplicate data for a seamless loop.
   const repeatedData = [...shuffledData, ...shuffledData];
 
   useLayoutEffect(() => {
     const wrapper = wrapperRef.current;
     if (!wrapper || repeatedData.length === 0) return;
 
-    // Function to set up the GSAP animation.
     const setupAnimation = () => {
-      // Kill any previous timeline.
       sliderTimeline.current?.kill();
 
-      // Measure the total height of all repeated cards.
       const totalHeight = wrapper.scrollHeight;
-      // The height of the original set of cards.
       const halfHeight = totalHeight / 2;
 
-      // Create a GSAP timeline that repeats infinitely.
       sliderTimeline.current = gsap.timeline({
         repeat: -1,
         ease: "none",
       });
 
-      // Define animation start and end points based on the direction prop.
       const fromY = direction === "bottom" ? 0 : -halfHeight;
       const toY = direction === "bottom" ? -halfHeight : 0;
 
@@ -62,7 +54,6 @@ const InteractiveCarousel = ({
       );
     };
 
-    // Wait for all images inside the wrapper to load
     const images = wrapper.querySelectorAll("img");
     let loadedImages = 0;
     const totalImages = images.length;
@@ -70,7 +61,7 @@ const InteractiveCarousel = ({
     const checkImagesLoaded = () => {
       loadedImages++;
       if (loadedImages === totalImages) {
-        setImagesLoaded(true); // Mark images as loaded
+        setImagesLoaded(true);
         setupAnimation();
       }
     };
@@ -89,7 +80,6 @@ const InteractiveCarousel = ({
       setupAnimation();
     }
 
-    // If scrollControl is enabled, adjust the timeline's timeScale based on window scroll.
     let scrollHandler;
     if (scrollControl === "true") {
       scrollHandler = () => {
@@ -120,7 +110,8 @@ const InteractiveCarousel = ({
 
   // Handle card click to navigate to the redirect link.
   const handleCardClick = (redirect) => {
-    window.open(redirect, "_blank");
+    nav(redirect);
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -144,7 +135,7 @@ const InteractiveCarousel = ({
             {!imagesLoaded ? (
               <Skeleton height={200} width={"90%"} borderRadius={10} />
             ) : (
-              <img src={item.image} alt={`brand-${item.id}`} />
+              <img src={item.thumbnail} alt={`brand-${item.id}`} />
             )}
           </div>
         ))}

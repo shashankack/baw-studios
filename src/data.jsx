@@ -7,49 +7,91 @@ import optimalMinds from "./assets/images/pages/works/optimal_minds.png";
 import socialDining from "./assets/images/pages/works/social_dining.png";
 import umi from "./assets/images/pages/works/umi.png";
 
-
+import palmsLogo from './assets/images/logo/palms_logo.png';
 
 export const worksData = [
-    {
-        id: 1,
-        image: fastrack,
-        redirect: "/works/fastrack",
-        title: "Fastrack",
-    },
-    {
-        id: 2,
-        image: holykicks,
-        redirect: "/works/holykicks",
-        title: "Holy Kicks",
-    },
-    {
-        id: 3,
-        image: moraleCode,
-        redirect: "/works/morale-code",
-        title: "Morale Code",
-    },
-    {
-        id: 4,
-        image: mrn,
-        redirect: "/works/mrn",
-        title: "MRN",
-    },
-    {
-        id: 5,
-        image: optimalMinds,
-        redirect: "/works/optimal-minds",
-        title: "Optimal Minds",
-    },
-    {
-        id: 6,
-        image: socialDining,
-        redirect: "/works/social-dining",
-        title: "Social Dining",
-    },
-    {
-        id: 7,
-        image: umi,
-        redirect: "/works/umi",
-        title: "UMI",
-    },
-]
+  {
+    id: 1,
+    thumbnail: fastrack,
+    redirect: "/works/fastrack",
+    title: "Fastrack",
+    logo: palmsLogo,
+    images: [
+      { one: [fastrack, umi, holykicks] },
+      { two: [mrn, optimalMinds, socialDining] },
+      { three: [umi, socialDining, moraleCode] },
+    ],
+  },
+  {
+    id: 2,
+    thumbnail: holykicks,
+    redirect: "/works/holykicks",
+    title: "Holy Kicks",
+    logo: palmsLogo,
+    images: [
+      { one: [fastrack, umi, holykicks] },
+      { two: [mrn, optimalMinds, socialDining] },
+      { three: [umi, socialDining, moraleCode] },
+    ],
+  },
+  {
+    id: 3,
+    thumbnail: moraleCode,
+    redirect: "/works/morale-code",
+    title: "Morale Code",
+    logo: palmsLogo,
+    images: [
+      { one: [fastrack, umi, holykicks] },
+      { two: [mrn, optimalMinds, socialDining] },
+      { three: [umi, socialDining, moraleCode] },
+    ],
+  },
+  {
+    id: 4,
+    thumbnail: mrn,
+    redirect: "/works/mrn",
+    title: "MRN",
+    logo: palmsLogo,
+    images: [
+      { one: [fastrack, umi, holykicks] },
+      { two: [mrn, optimalMinds, socialDining] },
+      { three: [umi, socialDining, moraleCode] },
+    ],
+  },
+  {
+    id: 5,
+    thumbnail: optimalMinds,
+    redirect: "/works/optimal-minds",
+    title: "Optimal Minds",
+    logo: palmsLogo,
+    images: [
+      { one: [fastrack, umi, holykicks] },
+      { two: [mrn, optimalMinds, socialDining] },
+      { three: [umi, socialDining, moraleCode] },
+    ],
+  },
+  {
+    id: 6,
+    thumbnail: socialDining,
+    redirect: "/works/social-dining",
+    title: "Social Dining",
+    logo: palmsLogo,
+    images: [
+      { one: [fastrack, umi, holykicks] },
+      { two: [mrn, optimalMinds, socialDining] },
+      { three: [umi, socialDining, moraleCode] },
+    ],
+  },
+  {
+    id: 7,
+    thumbnail: umi,
+    redirect: "/works/umi",
+    title: "UMI",
+    logo: palmsLogo,
+    images: [
+      { one: [fastrack, umi, holykicks] },
+      { two: [mrn, optimalMinds, socialDining] },
+      { three: [umi, socialDining, moraleCode] },
+    ],
+  },
+];

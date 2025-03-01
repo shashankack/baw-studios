@@ -4,6 +4,7 @@
     align-items: center;
     justify-content: space-evenly;
     padding: 0 20px;
+    background-color: #080808;
   
     .left {
       width: 30%;
@@ -17,7 +18,7 @@
   
       h1 {
         margin-left: -7px;
-        /* Use clamp() to fluidly scale the font between a minimum and maximum value */
+        font-family: "Limelight";
         font-size: clamp(2rem, 6vw, 6rem);
         font-weight: 700;
         color: #1563ff;
@@ -26,6 +27,7 @@
       p {
         /* Using vw units for responsiveness plus a clamp() for consistency */
         font-size: clamp(1rem, 1.2vw, 1.2rem);
+        color: #fcf3e3;
         text-align: justify;
       }
     }
