@@ -1,0 +1,26 @@
+.branding-container {
+    position: relative;
+    height: 700vh;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    .branding-stack {
+      position: fixed;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 400px;
+    }
+  
+    .branding-image {
+      width: 800px;
+      height: 400px;
+      object-fit: cover;
+      position: absolute;
+      opacity: 0;
+    }
+  }
+  
