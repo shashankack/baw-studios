@@ -1,59 +1,82 @@
-import React, { useEffect, useRef } from "react";
-import gsap from "gsap";
+import React, { useRef, useEffect } from "react";
+import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import PropTypes from "prop-types";
 import "./StackingImages.scss";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const StackingImages = ({ images }) => {
+const StackingImages = ({ images = [], paragraph = "" }) => {
   const containerRef = useRef(null);
+  const imagesRef = useRef([]);
+
+  imagesRef.current = images.map(
+    (_, i) => imagesRef.current[i] ?? React.createRef()
+  );
 
   useEffect(() => {
-    if (!images || images.length === 0) return; // Prevent errors if no images are passed
+    const container = containerRef.current;
+    const imageEls = imagesRef.current.map((ref) => ref.current);
 
-    const elements = gsap.utils.toArray(".branding-image");
-
-    let tl = gsap.timeline({
+    const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top bottom",
-        end: "center center",
-        scrub: true,
+        trigger: container,
+        start: "top top",
+        end: "bottom top",
+        scrub: 1,
       },
+      smoothChildTiming: true,
     });
 
-    elements.forEach((el, index) => {
-      const randomRotation = Math.random() * 5 - 5; // Random rotation between -15° and 15°
+    imageEls.forEach((imgEl, i) => {
+      const randomRotation = Math.random() * 10 - 5;
 
-      tl.set(el, { zIndex: index + 10 }) // Ensure the new image is on top before animation starts
-        .fromTo(
-          el,
-          { opacity: 0, scale: 3 },
-          { scale: 1, opacity: 1, duration: 1.5, ease: "power2.out" }
-        )
-        .to(el, { rotation: randomRotation }, "-=0.5");
+      tl.fromTo(
+        imgEl,
+        {
+          scale: 3,
+          rotation: randomRotation,
+          y: 200,
+          opacity: 0,
+        },
+        {
+          scale: 1,
+          rotation: randomRotation,
+          y: 0,
+          opacity: 1,
+          duration: 1.5,
+          ease: "power2.inOut",
+        },
+        i === 0 ? 0 : "+=0.5"
+      );
+
+      tl.to({}, { duration: 1.5 });
     });
-  }, [images]); // Re-run animation if images change
+
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
+  }, [images]);
 
   return (
-    <div ref={containerRef} className="branding-container">
-      <div className="branding-stack">
-        {images.map((src, index) => (
+    <div className="stacking-images-container" ref={containerRef}>
+      <div className="paragraph-section">
+        {paragraph}
+        <div className="arrows"></div>
+      </div>
+      <div className="images-section">
+        {images.map((img, index) => (
           <img
-            key={index}
-            src={src}
-            alt={`branding-img-${index}`}
-            className="branding-image"
+            key={`stack-img-${index}`}
+            ref={imagesRef.current[index]}
+            src={img}
+            alt={`stack-img-${index}`}
+            className="stacked-image"
+            style={{ zIndex: 5 + index }}
           />
         ))}
       </div>
     </div>
   );
-};
-
-StackingImages.propTypes = {
-  images: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default StackingImages;

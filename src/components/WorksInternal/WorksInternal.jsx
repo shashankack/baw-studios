@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import { worksData } from "../../data";
 import ImageSlider from "../ImageSlider/ImageSlider";
 
-import MainMenu from "../MainMenu/MainMenu";
 import "./WorksInternal.scss";
 
 const WorksInternal = () => {
@@ -15,7 +14,6 @@ const WorksInternal = () => {
 
   return (
     <div className="works-internal-container">
-      <MainMenu />
       {/* Left Section */}
       <div key={workItem.id} className="left-container">
         <div className="top">

@@ -6,11 +6,14 @@ import WorksInternal from "./components/WorksInternal/WorksInternal";
 import Branding from "./pages/Services/branding";
 import Test from "./components/Test/Test";
 
+import MainMenu from "./components/MainMenu/MainMenu";
+
 import { worksData } from "./data";
 
 const App = () => {
   return (
     <Router>
+      <MainMenu />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />

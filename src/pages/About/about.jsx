@@ -1,11 +1,9 @@
 import "./about.scss";
 import BackButton from "../../components/BackButton/BackButton";
-import MainMenu from "../../components/MainMenu/MainMenu";
 
 const about = () => {
   return (
     <section className="about-section">
-      <MainMenu />
       <h1>ABOUT</h1>
       <p>
         BAW Studio is a creative hub established to deliver cutting-edge
