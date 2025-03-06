@@ -14,6 +14,13 @@ import holyKicksBranding from "./assets/images/pages/services/branding/holy_kick
 
 import palmsLogo from "./assets/images/logo/palms_logo.png";
 
+// Web
+import unnecessaryWeb from "./assets/images/pages/services/web/unnecessary.png";
+import umiWeb from "./assets/images/pages/services/web/umi.png";
+import desiDhartiWeb from "./assets/images/pages/services/web/desi_dharti.png";
+import holyKicksWeb from "./assets/images/pages/services/web/holy_kicks.png";
+import studioMasonWeb from "./assets/images/pages/services/web/studio_mason.png";
+
 export const worksData = [
   {
     id: 1,
@@ -146,3 +153,36 @@ export const brandingData = {
     },
   ],
 };
+
+export const websiteData = [
+  {
+    id: 1,
+    title: "UMI",
+    thumbnail: umiWeb,
+    redirect: "http://umimatchashop.com",
+  },
+  {
+    id: 2,
+    title: "Desi Dharti",
+    thumbnail: desiDhartiWeb,
+    redirect: "https://desi-dharti.vercel.app",
+  },
+  {
+    id: 3,
+    title: "Unecessary",
+    thumbnail: "./assets/images/pages/services/web/unnecessary.png",
+    redirect: "https://unnssry.shop",
+  },
+  {
+    id: 4,
+    title: "Holy Kicks",
+    thumbnail: holyKicksWeb,
+    redirect: "https://holykicks1.onrender.com",
+  },
+  {
+    id: 5,
+    title: "Studio Mason",
+    thumbnail: studioMasonWeb,
+    redirect: "https://studiomason.in",
+  },
+];

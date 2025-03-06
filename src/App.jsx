@@ -4,11 +4,8 @@ import About from "./pages/About/about";
 import Works from "./pages/Works/works";
 import WorksInternal from "./components/WorksInternal/WorksInternal";
 import Branding from "./pages/Services/branding";
-import Test from "./components/Test/Test";
-
+import Web from "./pages/Services/web";
 import MainMenu from "./components/MainMenu/MainMenu";
-
-import { worksData } from "./data";
 
 const App = () => {
   return (
@@ -18,9 +15,9 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/works" element={<Works />} />
-        <Route path="/works/:slug" element={<WorksInternal /> } />
+        <Route path="/works/:slug" element={<WorksInternal />} />
         <Route path="/services/branding" element={<Branding />} />
-        <Route path="/test" element={<Test data={worksData}/>} />
+        <Route path="/services/web" element={<Web />} />
       </Routes>
     </Router>
   );

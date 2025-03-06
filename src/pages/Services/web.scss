@@ -1,0 +1,91 @@
+.web-section {
+  font-family: "Helvetica";
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #fcf3e3;
+
+  .back {
+    position: fixed;
+    right: 60px;
+    top: 120px;
+  }
+
+  h3 {
+    font-size: 26px;
+    text-transform: uppercase;
+    font-weight: 300;
+    color: #1563ff;
+    margin: 80px 0 0;
+  }
+
+  .laptop-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    padding: 20px;
+    position: relative;
+
+    .website-1,
+    .website-2,
+    .website-3,
+    .website-4,
+    .website-5 {
+      transition: all 0.3s ease;
+      cursor: pointer;
+      scale: 0.7;
+      position: absolute;
+      rotate: -20deg;
+
+      &:hover {
+        scale: 0.72;
+      }
+    }
+
+    .website-1 {
+      top: 40%;
+      left: 30%;
+      z-index: 20;
+    }
+
+    .website-2 {
+      top: 28%;
+      left: 40%;
+      z-index: 19;
+    }
+
+    .website-3 {
+      top: 20%;
+      left: 28%;
+      z-index: 18;
+    }
+
+    .website-4 {
+      top: 12%;
+      left: 50%;
+      z-index: 17;
+    }
+    .website-5 {
+      top: 35%;
+      left: 50%;
+      z-index: 16;
+    }
+  }
+
+  .moving-text-container {
+    padding: 0;
+    width: 100%;
+  }
+
+  .video-container {
+    width: 70%;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba($color: #000000, $alpha: .1);
+  }
+}
