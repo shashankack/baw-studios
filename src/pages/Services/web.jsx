@@ -2,6 +2,8 @@ import "./web.scss";
 
 import BackButton from "../../components/BackButton/BackButton";
 import MarqueeSlider from "../../components/MarqueeSlider/MarqueeSlider";
+import MainMenu from "../../components/MainMenu/MainMenu";
+import { websiteData } from "../../data";
 
 import laptop from "../../assets/images/pages/services/web/laptop.png";
 import unnecessary from "../../assets/images/pages/services/web/unnecessary.png";
@@ -10,11 +12,11 @@ import desiDharti from "../../assets/images/pages/services/web/desi_dharti.png";
 import holyKicks from "../../assets/images/pages/services/web/holy_kicks.png";
 import studioMason from "../../assets/images/pages/services/web/studio_mason.png";
 import SimpleImageSlider from "../../components/ImageSlider/SimpleImageSlider";
-import { websiteData } from "../../data";
 
 const Web = () => {
   return (
     <section className="web-section">
+      <MainMenu color="black" />
       <div className="back">
         <BackButton />
       </div>

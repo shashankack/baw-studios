@@ -8,6 +8,7 @@ import { brandingData } from "../../data";
 import BackButton from "../../components/BackButton/BackButton";
 
 import "./branding.scss";
+import MainMenu from "../../components/MainMenu/MainMenu";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -17,7 +18,7 @@ const Branding = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.timeline({
+      const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
@@ -26,47 +27,56 @@ const Branding = () => {
           scrub: true,
         },
       });
+
+      // Your animation setup (if any)
     }, sectionRef);
 
-    return () => ctx.revert();
+    return () => {
+      // IMPORTANT: Kill all ScrollTriggers on unmount
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      ctx.revert();
+    };
   }, []);
 
   return (
-    <section className="branding-section" ref={sectionRef}>
-      <div className="back">
-        <BackButton />
-      </div>
-      <h2>BRANDING</h2>
-      <div className="stack-container">
-        <StackingImages
-          images={brandingData.images}
-          paragraph={brandingData.paragraph}
-        />
-      </div>
-      <div className="content">
-        <h3>
-          Explore the fundamental components that shape and define a brand's
-          identity, ensuring consistency and distinction in the market.
-        </h3>
-      </div>
+    <>
+      <MainMenu color="black" />
+      <section className="branding-section" ref={sectionRef}>
+        <div className="back">
+          <BackButton />
+        </div>
+        <h2>BRANDING</h2>
+        <div className="stack-container">
+          <StackingImages
+            images={brandingData.images}
+            paragraph={brandingData.paragraph}
+          />
+        </div>
+        <div className="content">
+          <h3>
+            Explore the fundamental components that shape and define a brand's
+            identity, ensuring consistency and distinction in the market.
+          </h3>
+        </div>
 
-      <div className="elements-container">
-        <div className="left">
-          {brandingData.brandingElements.map((element, index) => (
-            <h3
-              key={`element-${index}`}
-              className={`element ${active === element ? "active" : ""}`}
-              onMouseOver={() => setActive(element)}
-            >
-              {element.title}
-            </h3>
-          ))}
+        <div className="elements-container">
+          <div className="left">
+            {brandingData.brandingElements.map((element, index) => (
+              <h3
+                key={`element-${index}`}
+                className={`element ${active === element ? "active" : ""}`}
+                onMouseOver={() => setActive(element)}
+              >
+                {element.title}
+              </h3>
+            ))}
+          </div>
+          <div className="right">
+            <p>{active.description}</p>
+          </div>
         </div>
-        <div className="right">
-          <p>{active.description}</p>
-        </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 

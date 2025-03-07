@@ -5,12 +5,10 @@ import Works from "./pages/Works/works";
 import WorksInternal from "./components/WorksInternal/WorksInternal";
 import Branding from "./pages/Services/branding";
 import Web from "./pages/Services/web";
-import MainMenu from "./components/MainMenu/MainMenu";
 
 const App = () => {
   return (
     <Router>
-      <MainMenu />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />

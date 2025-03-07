@@ -1,16 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FaChevronUp } from "react-icons/fa";
 import "./MainMenu.scss";
 
 import whiteLogo from "../../assets/images/logo/white_logo.png";
+import blackLogo from "../../assets/images/logo/black_logo.png";
 import whiteHamburger from "../../assets/images/icons/white_hamburger.png";
+import blackHamburger from "../../assets/images/icons/black_hamburger.png";
 import blueAmp from "../../assets/images/icons/blue_amp.png";
 import whiteAmp from "../../assets/images/icons/white_amp.png";
+import blackAmp from "../../assets/images/icons/black_amp.png";
 import monogram from "../../assets/images/logo/monogram/monogram_m2.png";
 
-const MainMenu = () => {
+const MainMenu = ({ color = "white" }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesMenuOpen, setIsServicesMenuOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -40,10 +44,18 @@ const MainMenu = () => {
   };
 
   const getMenuIcon = () => {
-    if (isMenuOpen) {
-      return isHovered ? blueAmp : whiteAmp;
+    if (color === "white") {
+      if (isMenuOpen) {
+        return isHovered ? blueAmp : whiteAmp;
+      } else {
+        return isHovered ? blueAmp : whiteHamburger;
+      }
     } else {
-      return isHovered ? blueAmp : whiteHamburger;
+      if (isMenuOpen) {
+        return isHovered ? blueAmp : whiteAmp;
+      } else {
+        return isHovered ? blueAmp : blackHamburger;
+      }
     }
   };
 
@@ -58,10 +70,13 @@ const MainMenu = () => {
   return (
     <div className="main-menu-container">
       <img
-        src={whiteLogo}
+        src={color === "white" ? whiteLogo : blackLogo}
         alt="BAW Studios Logo"
         className="logo"
-        onClick={() => handleRedirect("/")}
+        onClick={() => {
+          ScrollTrigger.getAll().forEach((trigger) => trigger.kill(true));
+          setTimeout(() => nav("/"), 10);
+        }}
       />
 
       <div
@@ -88,16 +103,37 @@ const MainMenu = () => {
 
         <ul>
           <li>
-            <button onClick={() => handleRedirect("/about")}>ABOUT</button>
+            <button
+              onClick={() => {
+                ScrollTrigger.getAll().forEach((trigger) => trigger.kill(true));
+                setTimeout(() => handleRedirect("/about"), 10);
+              }}
+            >
+              ABOUT
+            </button>
           </li>
           <li>
             <button onClick={openServicesMenu}>SERVICES</button>
           </li>
           <li>
-            <button onClick={() => handleRedirect("/works")}>WORKS</button>
+            <button
+              onClick={() => {
+                ScrollTrigger.getAll().forEach((trigger) => trigger.kill(true));
+                setTimeout(() => handleRedirect("/works"), 10);
+              }}
+            >
+              WORKS
+            </button>
           </li>
           <li>
-            <button onClick={() => handleRedirect("/contact")}>CONTACT</button>
+            <button
+              onClick={() => {
+                ScrollTrigger.getAll().forEach((trigger) => trigger.kill(true));
+                setTimeout(() => handleRedirect("/contact"), 10);
+              }}
+            >
+              CONTACT
+            </button>
           </li>
         </ul>
       </div>
@@ -122,17 +158,38 @@ const MainMenu = () => {
               </button>
             </li>
             <li>
-              <button onClick={() => handleRedirect("/services/web")}>
+              <button
+                onClick={() => {
+                  ScrollTrigger.getAll().forEach((trigger) =>
+                    trigger.kill(true)
+                  );
+                  setTimeout(() => handleRedirect("/services/web"), 10);
+                }}
+              >
                 WEB
               </button>
             </li>
             <li>
-              <button onClick={() => handleRedirect("/services/social")}>
+              <button
+                onClick={() => {
+                  ScrollTrigger.getAll().forEach((trigger) =>
+                    trigger.kill(true)
+                  );
+                  setTimeout(() => handleRedirect("/services/social"), 10);
+                }}
+              >
                 SOCIAL
               </button>
             </li>
             <li>
-              <button onClick={() => handleRedirect("/services/production")}>
+              <button
+                onClick={() => {
+                  ScrollTrigger.getAll().forEach((trigger) =>
+                    trigger.kill(true)
+                  );
+                  setTimeout(() => handleRedirect("/services/production"), 10);
+                }}
+              >
                 PRODUCTION
               </button>
             </li>
