@@ -5,6 +5,7 @@
   flex-direction: column;
   justify-content: center;
   background-color: #fcf3e3;
+  overflow: hidden;
 
   .back {
     position: fixed;
@@ -30,49 +31,15 @@
     padding: 20px;
     position: relative;
 
-    .website-1,
-    .website-2,
-    .website-3,
-    .website-4,
-    .website-5 {
-      transition: all 0.3s ease;
+    .laptop {
+      position: relative;
+      z-index: 1;
+    }
+
+    .website {
       cursor: pointer;
-      scale: 0.7;
       position: absolute;
-      rotate: -20deg;
-
-      &:hover {
-        scale: 0.72;
-      }
-    }
-
-    .website-1 {
-      top: 40%;
-      left: 30%;
-      z-index: 20;
-    }
-
-    .website-2 {
-      top: 28%;
-      left: 40%;
-      z-index: 19;
-    }
-
-    .website-3 {
-      top: 20%;
-      left: 28%;
-      z-index: 18;
-    }
-
-    .website-4 {
-      top: 12%;
-      left: 50%;
-      z-index: 17;
-    }
-    .website-5 {
-      top: 35%;
-      left: 50%;
-      z-index: 16;
+      z-index: 2;
     }
   }
 
