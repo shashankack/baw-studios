@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useCallback } from "react";
 import { gsap } from "gsap";
 
 import MainMenu from "../../components/MainMenu/MainMenu";
@@ -9,16 +9,12 @@ import SimpleImageSlider from "../../components/ImageSlider/SimpleImageSlider";
 import { websiteData } from "../../data";
 
 import laptop from "../../assets/images/pages/services/web/laptop.png";
-import unnecessary from "../../assets/images/pages/services/web/unnecessary.png";
-import umi from "../../assets/images/pages/services/web/umi.png";
-import desiDharti from "../../assets/images/pages/services/web/desi_dharti.png";
-import holyKicks from "../../assets/images/pages/services/web/holy_kicks.png";
-import studioMason from "../../assets/images/pages/services/web/studio_mason.png";
 
 import "./web.scss";
 
 const Web = () => {
   const sectionRef = useRef(null);
+  const laptopContainerRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -70,17 +66,58 @@ const Web = () => {
       const websites = document.querySelectorAll(".website");
       websites.forEach((website) => {
         website.addEventListener("mouseenter", () => {
-          gsap.to(website, { scale: 0.85, duration: 0.3, ease: "power2.out", zIndex: 100 });
+          gsap.to(website, {
+            scale: 0.85,
+            duration: 0.3,
+            ease: "power2.out",
+            zIndex: 100,
+          });
         });
 
         website.addEventListener("mouseleave", () => {
-          gsap.to(website, { scale: 0.8, duration: 0.3, ease: "power2.out", zIndex: 2 });
+          gsap.to(website, {
+            scale: 0.8,
+            duration: 0.3,
+            ease: "power2.out",
+            zIndex: 2,
+          });
         });
       });
     });
 
     return () => ctx.revert();
   }, []);
+
+  const handleMouseMove = useCallback((e) => {
+    const rect = laptopContainerRef.current.getBoundingClientRect();
+    const xPos = (e.clientX - rect.left) / rect.width - 0.5;
+    const yPos = (e.clientY - rect.top) / rect.height - 0.5;
+
+    const rotationY = xPos * 20;
+    const rotationX = yPos * -20;
+
+    gsap.to(laptopContainerRef.current, {
+      rotationY,
+      rotationX,
+      transformPerspective: 800,
+      transformOrigin: "center",
+      duration: 0.4,
+      ease: "power3.out",
+    });
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    gsap.to(laptopContainerRef.current, {
+      rotationY: 0,
+      rotationX: 0,
+      duration: 0.6,
+      ease: "power3.out",
+    });
+  }, []);
+
+  const handleRedirect = (link) => {
+    window.open(link, "_blank");
+  };
 
   return (
     <section className="web-section" ref={sectionRef}>
@@ -91,22 +128,22 @@ const Web = () => {
 
       <h3>Web Design & Development</h3>
 
-      <div className="laptop-container">
+      <div
+        className="laptop-container"
+        ref={laptopContainerRef}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+      >
         <img src={laptop} className="laptop" alt="Laptop" />
-
-        <img
-          src={unnecessary}
-          className="website website-1"
-          alt="Unnecessary"
-        />
-        <img src={holyKicks} className="website website-2" alt="Holy Kicks"  />
-        <img
-          src={studioMason}
-          className="website website-3"
-          alt="Studio Mason"
-        />
-        <img src={desiDharti} className="website website-4" alt="Desi Dharti" />
-        <img src={umi} className="website website-5" alt="Umi" style={{zIndex: "1"}} />
+        {websiteData.map((website) => (
+          <img
+            key={website.id}
+            src={website.thumbnail}
+            className={`website website-${website.id}`}
+            alt={website.title}
+            onClick={() => handleRedirect(website.redirect)}
+          />
+        ))}
       </div>
 
       <div className="moving-text-container">

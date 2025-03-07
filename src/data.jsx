@@ -163,9 +163,9 @@ export const websiteData = [
   },
   {
     id: 2,
-    title: "Desi Dharti",
-    thumbnail: desiDhartiWeb,
-    redirect: "https://desi-dharti.vercel.app",
+    title: "Holy Kicks",
+    thumbnail: holyKicksWeb,
+    redirect: "https://holykicks1.onrender.com",
   },
   {
     id: 3,
@@ -175,9 +175,9 @@ export const websiteData = [
   },
   {
     id: 4,
-    title: "Holy Kicks",
-    thumbnail: holyKicksWeb,
-    redirect: "https://holykicks1.onrender.com",
+    title: "Desi Dharti",
+    thumbnail: desiDhartiWeb,
+    redirect: "https://desi-dharti.vercel.app",
   },
   {
     id: 5,
