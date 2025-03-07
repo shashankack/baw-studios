@@ -170,7 +170,7 @@ export const websiteData = [
   {
     id: 3,
     title: "Unecessary",
-    thumbnail: "./assets/images/pages/services/web/unnecessary.png",
+    thumbnail: unnecessaryWeb,
     redirect: "https://unnssry.shop",
   },
   {

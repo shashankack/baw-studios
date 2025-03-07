@@ -9,7 +9,7 @@ import umi from "../../assets/images/pages/services/web/umi.png";
 import desiDharti from "../../assets/images/pages/services/web/desi_dharti.png";
 import holyKicks from "../../assets/images/pages/services/web/holy_kicks.png";
 import studioMason from "../../assets/images/pages/services/web/studio_mason.png";
-import ImageSlider from "../../components/ImageSlider/ImageSlider";
+import SimpleImageSlider from "../../components/ImageSlider/SimpleImageSlider";
 import { websiteData } from "../../data";
 
 const Web = () => {
@@ -33,8 +33,8 @@ const Web = () => {
         <MarqueeSlider text="YOUR WEBSITE OUR DESIGN - " />
       </div>
 
-      <h3>AR - VR WEBSITES</h3>
-      <div className="video-container"><ImageSlider images /></div>
+      <h3>OTHER WEBSITES</h3>
+      <div className="slider-container"><SimpleImageSlider websites={websiteData} clickable /></div>
     </section>
   );
 };

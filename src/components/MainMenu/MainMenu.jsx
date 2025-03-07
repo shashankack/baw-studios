@@ -4,8 +4,8 @@ import gsap from "gsap";
 import { FaChevronUp } from "react-icons/fa";
 import "./MainMenu.scss";
 
-import logo from "../../assets/images/logo/logo.png";
-import hamburger from "../../assets/images/icons/hamburger.png";
+import whiteLogo from "../../assets/images/logo/white_logo.png";
+import whiteHamburger from "../../assets/images/icons/white_hamburger.png";
 import blueAmp from "../../assets/images/icons/blue_amp.png";
 import whiteAmp from "../../assets/images/icons/white_amp.png";
 import monogram from "../../assets/images/logo/monogram/monogram_m2.png";
@@ -43,7 +43,7 @@ const MainMenu = () => {
     if (isMenuOpen) {
       return isHovered ? blueAmp : whiteAmp;
     } else {
-      return isHovered ? blueAmp : hamburger;
+      return isHovered ? blueAmp : whiteHamburger;
     }
   };
 
@@ -58,7 +58,7 @@ const MainMenu = () => {
   return (
     <div className="main-menu-container">
       <img
-        src={logo}
+        src={whiteLogo}
         alt="BAW Studios Logo"
         className="logo"
         onClick={() => handleRedirect("/")}

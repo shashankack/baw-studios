@@ -30,7 +30,7 @@ const MarqueeSlider = ({
       toX = 0;
     }
 
-    const marqueeAnim = gsap.fromTo(w
+    const marqueeAnim = gsap.fromTo(
       containerRef.current,
       { x: fromX },
       {
@@ -60,7 +60,6 @@ const MarqueeSlider = ({
         <div className="marquee-text" ref={textRef2}>
           {text}
         </div>
-        
       </div>
     </div>
   );

@@ -7,7 +7,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start; // use flex-start for clarity
-  z-index: 10;
+  z-index: 100;
 
   .logo {
     width: clamp(50px, 12vw, 150px);
