@@ -5,6 +5,7 @@ import Works from "./pages/Works/works";
 import WorksInternal from "./components/WorksInternal/WorksInternal";
 import Branding from "./pages/Services/branding";
 import Web from "./pages/Services/web";
+import Contact from "./pages/Contact/Contact";
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/works" element={<Works />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="/works/:slug" element={<WorksInternal />} />
         <Route path="/services/branding" element={<Branding />} />
         <Route path="/services/web" element={<Web />} />

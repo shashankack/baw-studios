@@ -27,12 +27,9 @@ const Branding = () => {
           scrub: true,
         },
       });
-
-      // Your animation setup (if any)
     }, sectionRef);
 
     return () => {
-      // IMPORTANT: Kill all ScrollTriggers on unmount
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
       ctx.revert();
     };
