@@ -1,0 +1,16 @@
+.carousel-section {
+  //   position: relative;
+
+  .text-content {
+    position: fixed;
+    bottom: 10%;
+    right: 10%;
+    color: white;
+
+    p {
+      font-size: 1.5rem;
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
+  }
+}

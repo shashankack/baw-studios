@@ -21,6 +21,14 @@ import desiDhartiWeb from "./assets/images/pages/services/web/desi_dharti.png";
 import holyKicksWeb from "./assets/images/pages/services/web/holy_kicks.png";
 import studioMasonWeb from "./assets/images/pages/services/web/studio_mason.png";
 
+// Socials
+import cosmeticMockup from "./assets/images/pages/socials/mockups/cosmetic_mockup.png";
+import gamdiasMockup from "./assets/images/pages/socials/mockups/gamdias_mockup.png";
+import holyKicksMockup from "./assets/images/pages/socials/mockups/holykicks_mockup.png";
+import optimaMindsMockup from "./assets/images/pages/socials/mockups/optimal_minds_mockup.png";
+import ticklePickleMockup from "./assets/images/pages/socials/mockups/ticklepickle_mockup.png";
+import yawnMockup from "./assets/images/pages/socials/mockups/yawn_mockup.png";
+
 export const worksData = [
   {
     id: 1,
@@ -186,3 +194,50 @@ export const websiteData = [
     redirect: "https://studiomason.in",
   },
 ];
+
+export const socialsData = {
+  content: {
+    extraText: "GET YOUR FEED ALIGNED WITH BAW STUDIOS",
+    ctaText: "KNOW MORE",
+    ctaLink: "/contact",
+  },
+
+  data: [
+    {
+      id: 1,
+      title: "Cosmetic",
+      image: cosmeticMockup,
+      redirect: "https://google.com",
+    },
+    {
+      id: 2,
+      title: "Gamdias",
+      image: gamdiasMockup,
+      redirect: "",
+    },
+    {
+      id: 3,
+      title: "Holy Kicks",
+      image: holyKicksMockup,
+      redirect: "",
+    },
+    {
+      id: 4,
+      title: "Optimal Minds",
+      image: optimaMindsMockup,
+      redirect: "",
+    },
+    {
+      id: 5,
+      title: "Tickle Pickle",
+      image: ticklePickleMockup,
+      redirect: "",
+    },
+    {
+      id: 6,
+      title: "Yawn",
+      image: yawnMockup,
+      redirect: "",
+    },
+  ],
+};

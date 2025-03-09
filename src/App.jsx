@@ -6,6 +6,9 @@ import WorksInternal from "./components/WorksInternal/WorksInternal";
 import Branding from "./pages/Services/branding";
 import Web from "./pages/Services/web";
 import Contact from "./pages/Contact/Contact";
+import InteractiveMarquee from "./components/InteractiveMarquee/InteractiveMarquee";
+import Social from "./pages/Services/social";
+import { socialsData } from "./data";
 
 const App = () => {
   return (
@@ -18,6 +21,17 @@ const App = () => {
         <Route path="/works/:slug" element={<WorksInternal />} />
         <Route path="/services/branding" element={<Branding />} />
         <Route path="/services/web" element={<Web />} />
+        <Route path="/services/social" element={<Social />} />
+
+        <Route
+          path="/test"
+          element={
+            <InteractiveMarquee
+              text="GET YOUR FEED ALIGNED"
+              images={socialsData}
+            />
+          }
+        />
       </Routes>
     </Router>
   );
