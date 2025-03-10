@@ -138,7 +138,7 @@ const Test = ({ data }) => {
     ) {
       const centerX = (container.scrollWidth - container.clientWidth) / 2;
       gsap.to(container, {
-        duration: 0.3,
+        duration: 0.5,
         scrollTo: { x: centerX },
         ease: "power2.inOut",
       });
@@ -151,7 +151,7 @@ const Test = ({ data }) => {
     ) {
       const centerY = (container.scrollHeight - container.clientHeight) / 2;
       gsap.to(container, {
-        duration: 0.3,
+        duration: 0.5,
         scrollTo: { y: centerY },
         ease: "power2.inOut",
       });
@@ -199,7 +199,7 @@ const Test = ({ data }) => {
     <Grid
       columnCount={columns}
       rowCount={rows}
-      // Increase grid cell size by the GAP to make room for spacing.
+      
       columnWidth={dimensions.cellWidth + GAP}
       rowHeight={dimensions.cellHeight + GAP}
       height={windowSize.height}

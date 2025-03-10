@@ -2,7 +2,6 @@
   display: none;
 }
 
-
 .gallery-card {
   width: 450px;
   height: 600px;
@@ -10,7 +9,7 @@
   align-items: center;
   justify-content: center;
   transition: transform 0.2s ease-out;
-  padding: 10px ;
+  padding: 10px;
 }
 
 .gallery-img {
@@ -18,10 +17,6 @@
   max-height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
-}
-
-.gallery-card:hover .gallery-img {
-  // transform: scale(1.05);
 }
 
 /* For screens up to 1024px */
