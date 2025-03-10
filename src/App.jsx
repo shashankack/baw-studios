@@ -8,7 +8,8 @@ import Web from "./pages/Services/web";
 import Contact from "./pages/Contact/Contact";
 import InteractiveMarquee from "./components/InteractiveMarquee/InteractiveMarquee";
 import Social from "./pages/Services/social";
-import { socialsData } from "./data";
+import { socialsData, worksData } from "./data";
+import Test from "./components/Test/Test";
 
 const App = () => {
   return (
@@ -23,15 +24,7 @@ const App = () => {
         <Route path="/services/web" element={<Web />} />
         <Route path="/services/social" element={<Social />} />
 
-        <Route
-          path="/test"
-          element={
-            <InteractiveMarquee
-              text="GET YOUR FEED ALIGNED"
-              images={socialsData}
-            />
-          }
-        />
+        <Route path="/test" element={<Test data={worksData} />} />
       </Routes>
     </Router>
   );
