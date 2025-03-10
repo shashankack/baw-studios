@@ -4,7 +4,7 @@ import "./home.scss";
 
 import monogram1 from "../../assets/images/logo/monogram/monogram_m1.png";
 import monogram2 from "../../assets/images/logo/monogram/monogram_m2.png";
-import landingPageVid from "../../assets/videos/tv_landing_video.mp4";
+import introVideo from "../../assets/videos/intro_video.mp4";
 import logoShow from "../../assets/videos/tv_logo_show.mp4";
 import MainMenu from "../../components/MainMenu/MainMenu";
 
@@ -71,7 +71,7 @@ const Home = () => {
 
   return (
     <div className="home-wrapper">
-      <MainMenu color="white" />
+      <MainMenu color="black" />
       {showLoader && (
         <div ref={loaderContainerRef} className="loader-container">
           <img
@@ -91,9 +91,10 @@ const Home = () => {
 
       <section className="video-container">
         <video
-          src={landingPageVid}
+          src={introVideo}
           className="landing-video"
           autoPlay
+          loop
           muted
           playsInline
         />
