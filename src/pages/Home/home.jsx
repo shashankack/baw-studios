@@ -96,6 +96,8 @@ const Home = () => {
           autoPlay
           loop
           muted
+          preload="auto"
+          webkit-playsinline="true"
           playsInline
         />
       </section>
