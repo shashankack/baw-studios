@@ -102,7 +102,7 @@ const Home = () => {
           loop
           muted
           playsInline
-          controls={isMobile}
+          // controls={isMobile}
         >
           <source src={introVideo} type="video/mp4" />
           Your browser does not support the video tag.
