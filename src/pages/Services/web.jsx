@@ -16,6 +16,7 @@ const Web = () => {
   const sectionRef = useRef(null);
   const laptopContainerRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [breakpoint, setBreakpoint] = useState("desktop");
 
   // Detect if device is mobile based on touch support.
   useEffect(() => {
@@ -24,18 +25,162 @@ const Web = () => {
     }
   }, []);
 
+  // Update breakpoint based on window width.
   useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setBreakpoint("desktop");
+      } else if (window.innerWidth >= 768) {
+        setBreakpoint("tablet");
+      } else {
+        setBreakpoint("mobile");
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Helper to get website positions with custom scale values for each breakpoint.
+  const getWebsitePositions = (bp) => {
+    if (bp === "desktop") {
+      return [
+        {
+          class: ".website-1",
+          top: "57%",
+          left: "40%",
+          scaleBefore: 0.8,
+          scaleAfter: 0.85,
+        },
+        {
+          class: ".website-2",
+          top: "42%",
+          left: "50%",
+          scaleBefore: 0.8,
+          scaleAfter: 0.85,
+        },
+        {
+          class: ".website-3",
+          top: "33%",
+          left: "35%",
+          scaleBefore: 0.8,
+          scaleAfter: 0.85,
+        },
+        {
+          class: ".website-4",
+          top: "19%",
+          left: "60%",
+          scaleBefore: 0.8,
+          scaleAfter: 0.85,
+        },
+        {
+          class: ".website-5",
+          top: "45%",
+          left: "65%",
+          scaleBefore: 0.8,
+          scaleAfter: 0.85,
+        },
+      ];
+    } else if (bp === "tablet") {
+      return [
+        {
+          class: ".website-1",
+          top: "60%",
+          left: "35%",
+          scaleBefore: 0.75,
+          scaleAfter: 0.75,
+        },
+        {
+          class: ".website-2",
+          top: "45%",
+          left: "45%",
+          scaleBefore: 0.75,
+          scaleAfter: 0.75,
+        },
+        {
+          class: ".website-3",
+          top: "38%",
+          left: "30%",
+          scaleBefore: 0.75,
+          scaleAfter: 0.75,
+        },
+        {
+          class: ".website-4",
+          top: "25%",
+          left: "55%",
+          scaleBefore: 0.75,
+          scaleAfter: 0.75,
+        },
+        {
+          class: ".website-5",
+          top: "52%",
+          left: "60%",
+          scaleBefore: 0.75,
+          scaleAfter: 0.75,
+        },
+      ];
+    } else {
+      // mobile
+      return [
+        {
+          class: ".website-1",
+          top: "35%",
+          left: "20%",
+          scaleBefore: 0.40,
+          scaleAfter: 0.65,
+        },
+        {
+          class: ".website-2",
+          top: "42%",
+          left: "50%",
+          scaleBefore: 0.40,
+          scaleAfter: 0.65,
+        },
+        {
+          class: ".website-3",
+          top: "62%",
+          left: "27%",
+          scaleBefore: 0.40,
+          scaleAfter: 0.65,
+        },
+        {
+          class: ".website-4",
+          top: "20%",
+          left: "70%",
+          scaleBefore: 0.40,
+          scaleAfter: 0.65,
+        },
+        {
+          class: ".website-5",
+          top: "47%",
+          left: "77%",
+          scaleBefore: 0.40,
+          scaleAfter: 0.65,
+        },
+      ];
+    }
+  };
+
+  // GSAP animations and website positions.
+  useEffect(() => {
+    const websitePositions = getWebsitePositions(breakpoint);
+
     const ctx = gsap.context(() => {
+      // Set initial properties for laptop and websites.
       gsap.set(".laptop", { opacity: 0, y: "-50%" });
+      // Remove scale from the general website set-up; we'll set it individually.
       gsap.set(".website", {
         opacity: 0,
-        scale: 0,
         rotate: -16,
         top: "50%",
         left: "50%",
         xPercent: -50,
         yPercent: -50,
         position: "absolute",
+      });
+      // Set each website's initial scale (scaleBefore).
+      websitePositions.forEach((pos) => {
+        gsap.set(pos.class, { scale: pos.scaleBefore });
       });
 
       const tl = gsap.timeline();
@@ -48,20 +193,13 @@ const Web = () => {
         ease: "power4.out",
       });
 
-      const websitePositions = [
-        { class: ".website-1", top: "57%", left: "40%" },
-        { class: ".website-2", top: "42%", left: "50%" },
-        { class: ".website-3", top: "33%", left: "35%" },
-        { class: ".website-4", top: "19%", left: "60%" },
-        { class: ".website-5", top: "45%", left: "65%" },
-      ];
-
+      // Animate each website to its target position and scale (scaleAfter).
       websitePositions.forEach((pos, idx) => {
         tl.to(
           pos.class,
           {
             opacity: 1,
-            scale: 0.8,
+            scale: pos.scaleBefore,
             top: pos.top,
             left: pos.left,
             duration: 0.8,
@@ -75,7 +213,14 @@ const Web = () => {
       websites.forEach((website) => {
         website.addEventListener("mouseenter", () => {
           gsap.to(website, {
-            scale: 0.85,
+            scale: (pos) => {
+              // On hover, we can optionally adjust the scale relative to the current scaleAfter.
+              // For example, increase by 6%.
+              const currentScale = websitePositions.find(
+                (w) => w.class === `.${website.classList[1]}`
+              )?.scaleAfter;
+              return currentScale ? currentScale * 1.06 : 0.85;
+            },
             duration: 0.3,
             ease: "power2.out",
             zIndex: 100,
@@ -83,18 +228,23 @@ const Web = () => {
         });
 
         website.addEventListener("mouseleave", () => {
+          // Return to the defined scaleAfter value.
+          const websiteClass = website.classList[1];
+          const posData = websitePositions.find(
+            (w) => w.class === `.${websiteClass}`
+          );
           gsap.to(website, {
-            scale: 0.8,
+            scale: posData ? posData.scaleAfter : 0.8,
             duration: 0.3,
             ease: "power2.out",
             zIndex: 2,
           });
         });
       });
-    });
+    }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [breakpoint]);
 
   // Mouse event handlers for desktop.
   const handleMouseMove = useCallback((e) => {
@@ -124,14 +274,21 @@ const Web = () => {
     });
   }, []);
 
-  // Device orientation handler for mobile.
+  // Device orientation handler for mobile with baseline calibration.
+  const baselineRef = useRef({ beta: null, gamma: null });
+
   useEffect(() => {
     if (isMobile && window.DeviceOrientationEvent) {
       const handleOrientation = (event) => {
-        // event.gamma is left-to-right tilt, event.beta is front-to-back.
-        // We scale these values so the rotation approximates our mouse-based effect.
-        const rotationY = event.gamma * (20 / 30); // adjust as needed
-        const rotationX = -event.beta * (20 / 30);
+        if (
+          baselineRef.current.beta === null ||
+          baselineRef.current.gamma === null
+        ) {
+          baselineRef.current = { beta: event.beta, gamma: event.gamma };
+        }
+        const rotationY = (event.gamma - baselineRef.current.gamma) * (20 / 30);
+        const rotationX = -(event.beta - baselineRef.current.beta) * (20 / 30);
+
         gsap.to(laptopContainerRef.current, {
           rotationY,
           rotationX,
@@ -144,7 +301,11 @@ const Web = () => {
 
       window.addEventListener("deviceorientation", handleOrientation, true);
       return () => {
-        window.removeEventListener("deviceorientation", handleOrientation, true);
+        window.removeEventListener(
+          "deviceorientation",
+          handleOrientation,
+          true
+        );
       };
     }
   }, [isMobile]);
@@ -165,7 +326,6 @@ const Web = () => {
       <div
         className="laptop-container"
         ref={laptopContainerRef}
-        // Attach mouse events only on non-mobile devices.
         {...(!isMobile && {
           onMouseMove: handleMouseMove,
           onMouseLeave: handleMouseLeave,
