@@ -2,13 +2,21 @@ import React from "react";
 import "./works.scss";
 import { worksData } from "../../data";
 import BackButton from "../../components/BackButton/BackButton";
+import MainMenu from "../../components/MainMenu/MainMenu";
 
-import InteractiveCarousel from "../../components/WorksInternal/InteractiveCarousel";
+// import InteractiveCarousel from "../../components/WorksInternal/InteractiveCarousel";
+import InteractiveGridGallery from "../../components/InteractiveGridGallery/InteractiveGridGallery";
 
 const Works = () => {
   return (
-    <section className="works-section">
-      <div className="left">
+    <>
+    <MainMenu />
+      <section className="works-section">
+        <div className="back">
+          <BackButton />
+        </div>
+        <InteractiveGridGallery data={worksData} />
+        {/* <div className="left">
         <h1>BRANDS</h1>
         <p>
           At BAW Studios, we partner with brands to forge distinctive digital
@@ -31,8 +39,9 @@ const Works = () => {
         <div className="right-container">
           <InteractiveCarousel data={worksData} direction="top" />
         </div>
-      </div>
-    </section>
+      </div> */}
+      </section>
+    </>
   );
 };
 

@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState, useCallback } from "react";
 import { FixedSizeGrid as Grid } from "react-window";
 import gsap from "gsap";
 import ScrollToPlugin from "gsap/ScrollToPlugin";
-import "./Test.scss";
+import "./InteractiveGridGallery.scss";
 
 gsap.registerPlugin(ScrollToPlugin);
 
@@ -143,7 +143,8 @@ const InteractiveGridGallery = ({ data }) => {
     const thresholdY = dimensions.cellHeight * 20;
     if (
       currentScrollLeft < thresholdX ||
-      currentScrollLeft > container.scrollWidth - container.clientWidth - thresholdX
+      currentScrollLeft >
+        container.scrollWidth - container.clientWidth - thresholdX
     ) {
       const centerX = (container.scrollWidth - container.clientWidth) / 2;
       gsap.to(container, {
@@ -173,7 +174,8 @@ const InteractiveGridGallery = ({ data }) => {
       const colIndex = parseInt(cell.getAttribute("data-col-index"), 10);
       // Randomize scroll speed: generate a factor between 0.8 and 1.2.
       const factor = 0.8 + seededRandom(colIndex) * 0.4;
-      const parallaxOffsetY = (container.scrollTop - centerScrollY) * (factor - 1);
+      const parallaxOffsetY =
+        (container.scrollTop - centerScrollY) * (factor - 1);
       gsap.to(cell, {
         y: parallaxOffsetY,
         duration: 0.1,
@@ -210,7 +212,10 @@ const InteractiveGridGallery = ({ data }) => {
             style={{ width: "100%", height: "100%" }}
           >
             <div style={{ margin: GAP / 2, width: "100%", height: "100%" }}>
-              <div className="gallery-card" style={{ width: "100%", height: "100%" }}>
+              <div
+                className="gallery-card"
+                style={{ width: "100%", height: "100%" }}
+              >
                 <a
                   href={item.redirect}
                   style={{ display: "block", width: "100%", height: "100%" }}

@@ -5,6 +5,16 @@
     justify-content: space-evenly;
     padding: 0 20px;
     background-color: #080808;
+
+    .back {
+      position: fixed;
+      top: 120px;
+      right: 20px;
+      color: #fcf3e3;
+      font-size: 1.5rem;
+      z-index: 40;
+      cursor: pointer;
+    }
   
     .left {
       width: 30%;
