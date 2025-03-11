@@ -91,7 +91,6 @@ const Home = () => {
 
       <section className="video-container">
         <video
-          src={introVideo}
           className="landing-video"
           autoPlay
           loop
@@ -99,7 +98,10 @@ const Home = () => {
           preload="auto"
           webkit-playsinline="true"
           playsInline
-        />
+        >
+          <source src={introVideo} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
       </section>
 
       <section className="next-video">
