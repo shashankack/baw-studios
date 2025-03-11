@@ -1,6 +1,6 @@
 import BackButton from "../../components/BackButton/BackButton";
 import MainMenu from "../../components/MainMenu/MainMenu";
-import "./Contact.scss";
+import "./contact.scss";
 
 const Contact = () => {
   return (
