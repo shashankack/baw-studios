@@ -5,7 +5,7 @@ import Works from "./pages/Works/works";
 import WorksInternal from "./components/WorksInternal/WorksInternal";
 import Branding from "./pages/Services/branding";
 import Web from "./pages/Services/web";
-import Contact from "./pages/Contact/Contact";
+import Contact from "./pages/Contact/contact";
 import InteractiveMarquee from "./components/InteractiveMarquee/InteractiveMarquee";
 import Social from "./pages/Services/social";
 import { socialsData, worksData } from "./data";
