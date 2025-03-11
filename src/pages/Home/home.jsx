@@ -13,6 +13,12 @@ const Home = () => {
   const monogram2Ref = useRef(null);
   const loaderContainerRef = useRef(null);
   const [showLoader, setShowLoader] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mobileRegex = /Android|iPhone|iPad|iPod/i;
+    setIsMobile(mobileRegex.test(navigator.userAgent));
+  }, []);
 
   useEffect(() => {
     const hasVisited = sessionStorage.getItem("hasVisited");
@@ -95,9 +101,8 @@ const Home = () => {
           autoPlay
           loop
           muted
-          preload="auto"
-          webkit-playsinline="true"
           playsInline
+          controls={isMobile}
         >
           <source src={introVideo} type="video/mp4" />
           Your browser does not support the video tag.
