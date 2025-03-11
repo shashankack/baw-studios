@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import { gsap } from "gsap";
 
 import MainMenu from "../../components/MainMenu/MainMenu";
@@ -15,6 +15,14 @@ import "./web.scss";
 const Web = () => {
   const sectionRef = useRef(null);
   const laptopContainerRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect if device is mobile based on touch support.
+  useEffect(() => {
+    if ("ontouchstart" in window || navigator.maxTouchPoints > 0) {
+      setIsMobile(true);
+    }
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -88,6 +96,7 @@ const Web = () => {
     return () => ctx.revert();
   }, []);
 
+  // Mouse event handlers for desktop.
   const handleMouseMove = useCallback((e) => {
     const rect = laptopContainerRef.current.getBoundingClientRect();
     const xPos = (e.clientX - rect.left) / rect.width - 0.5;
@@ -115,6 +124,31 @@ const Web = () => {
     });
   }, []);
 
+  // Device orientation handler for mobile.
+  useEffect(() => {
+    if (isMobile && window.DeviceOrientationEvent) {
+      const handleOrientation = (event) => {
+        // event.gamma is left-to-right tilt, event.beta is front-to-back.
+        // We scale these values so the rotation approximates our mouse-based effect.
+        const rotationY = event.gamma * (20 / 30); // adjust as needed
+        const rotationX = -event.beta * (20 / 30);
+        gsap.to(laptopContainerRef.current, {
+          rotationY,
+          rotationX,
+          transformPerspective: 800,
+          transformOrigin: "center",
+          duration: 0.4,
+          ease: "power3.out",
+        });
+      };
+
+      window.addEventListener("deviceorientation", handleOrientation, true);
+      return () => {
+        window.removeEventListener("deviceorientation", handleOrientation, true);
+      };
+    }
+  }, [isMobile]);
+
   const handleRedirect = (link) => {
     window.open(link, "_blank");
   };
@@ -131,8 +165,11 @@ const Web = () => {
       <div
         className="laptop-container"
         ref={laptopContainerRef}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
+        // Attach mouse events only on non-mobile devices.
+        {...(!isMobile && {
+          onMouseMove: handleMouseMove,
+          onMouseLeave: handleMouseLeave,
+        })}
       >
         <img src={laptop} className="laptop" alt="Laptop" />
         {websiteData.map((website) => (
