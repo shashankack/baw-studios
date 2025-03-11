@@ -6,7 +6,7 @@ import "./Test.scss";
 
 gsap.registerPlugin(ScrollToPlugin);
 
-// Fisher-Yates shuffle to randomize the entire data array.
+// Fisher-Yates shuffle to randomize the data in array.
 function randomizeData(data) {
   const randomized = [...data];
   for (let i = randomized.length - 1; i > 0; i--) {
@@ -16,8 +16,7 @@ function randomizeData(data) {
   return randomized;
 }
 
-// A simple seeded random generator to produce a pseudo-random number in [0,1)
-// based on a seed. This ensures that each cell always gets the same “random” value.
+// Seeded random function for consistent random values per seed.
 function seededRandom(seed) {
   const x = Math.sin(seed) * 10000;
   return x - Math.floor(x);
@@ -49,13 +48,13 @@ const getResponsiveDimensions = () => {
 };
 
 const Test = ({ data }) => {
-  const GAP = 15;
+  const GAP = 1;
   const [dimensions, setDimensions] = useState(getResponsiveDimensions());
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
   });
-  
+
   // Randomize the provided data globally.
   const [shuffledData, setShuffledData] = useState(() => randomizeData(data));
   useEffect(() => {
@@ -82,10 +81,11 @@ const Test = ({ data }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Center scroll on mount or when window/dimensions change.
+  // Center scroll on mount or when window size/dimensions change.
   useEffect(() => {
     if (containerRef.current) {
-      const { clientWidth, clientHeight, scrollWidth, scrollHeight } = containerRef.current;
+      const { clientWidth, clientHeight, scrollWidth, scrollHeight } =
+        containerRef.current;
       const centerX = (scrollWidth - clientWidth) / 2;
       const centerY = (scrollHeight - clientHeight) / 2;
       containerRef.current.scrollLeft = centerX;
@@ -103,7 +103,7 @@ const Test = ({ data }) => {
     // Vertical shrink.
     const scrollTop = container.scrollTop;
     const deltaY = Math.abs(scrollTop - lastScrollTop.current);
-    const newScaleX = 1 - Math.min(deltaY / 300, 0.07);
+    const newScaleX = 1 - Math.min(deltaY / 300, 0.1);
     gsap.to(".gallery-card", {
       scaleX: newScaleX,
       duration: 0.1,
@@ -122,17 +122,17 @@ const Test = ({ data }) => {
     // Horizontal shrink.
     const currentScrollLeft = container.scrollLeft;
     const deltaX = Math.abs(currentScrollLeft - lastScrollLeft.current);
-    const newScaleY = 1 - Math.min(deltaX / 300, 0.03);
+    const newScaleY = 1 - Math.min(deltaX / 250, 0.1);
     gsap.to(".gallery-img", {
       scaleY: newScaleY,
-      duration: 0.1,
+      duration: 0.01,
       ease: "power1.out",
     });
     clearTimeout(updateAnimations.resetTimeoutHorizontal);
     updateAnimations.resetTimeoutHorizontal = setTimeout(() => {
       gsap.to(".gallery-img", {
         scaleY: 1,
-        duration: 0.2,
+        duration: 0.05,
         ease: "power1.out",
       });
     }, 150);
@@ -166,12 +166,13 @@ const Test = ({ data }) => {
       lastScrollTop.current = centerY;
     }
 
-    // Columns parallax.
+    // Columns parallax with randomized scroll speed per column.
     const centerScrollY = (container.scrollHeight - container.clientHeight) / 2;
     const parallaxCells = container.querySelectorAll(".parallax-cell");
     parallaxCells.forEach((cell) => {
       const colIndex = parseInt(cell.getAttribute("data-col-index"), 10);
-      const factor = 0.9 + ((Math.sin(colIndex) + 1) / 2) * 0.2;
+      // Randomize scroll speed: generate a factor between 0.8 and 1.2.
+      const factor = 0.8 + seededRandom(colIndex) * 0.4;
       const parallaxOffsetY = (container.scrollTop - centerScrollY) * (factor - 1);
       gsap.to(cell, {
         y: parallaxOffsetY,
@@ -210,12 +211,32 @@ const Test = ({ data }) => {
           >
             <div style={{ margin: GAP / 2, width: "100%", height: "100%" }}>
               <div className="gallery-card" style={{ width: "100%", height: "100%" }}>
-                <img
-                  src={item.thumbnail}
-                  alt={item.title}
-                  className="gallery-img"
-                  loading="lazy"
-                />
+                <a
+                  href={item.redirect}
+                  style={{ display: "block", width: "100%", height: "100%" }}
+                >
+                  <img
+                    src={item.thumbnail}
+                    alt={item.title}
+                    className="gallery-img"
+                    loading="lazy"
+                    style={{ display: "block", width: "100%", height: "100%" }}
+                    onMouseEnter={(e) =>
+                      gsap.to(e.currentTarget, {
+                        scale: 1.03,
+                        duration: 0.05,
+                        ease: "power1.out",
+                      })
+                    }
+                    onMouseLeave={(e) =>
+                      gsap.to(e.currentTarget, {
+                        scale: 1,
+                        duration: 0.2,
+                        ease: "power1.out",
+                      })
+                    }
+                  />
+                </a>
               </div>
             </div>
           </div>
