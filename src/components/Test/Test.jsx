@@ -1,63 +1,75 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import { FixedSizeGrid as Grid } from "react-window";
 import gsap from "gsap";
 import ScrollToPlugin from "gsap/ScrollToPlugin";
 import "./Test.scss";
 
-// Register the ScrollToPlugin with GSAP.
 gsap.registerPlugin(ScrollToPlugin);
 
-// Calculate responsive cell dimensions based on window width/height.
+// Fisher-Yates shuffle to randomize the entire data array.
+function randomizeData(data) {
+  const randomized = [...data];
+  for (let i = randomized.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [randomized[i], randomized[j]] = [randomized[j], randomized[i]];
+  }
+  return randomized;
+}
+
+// A simple seeded random generator to produce a pseudo-random number in [0,1)
+// based on a seed. This ensures that each cell always gets the same “random” value.
+function seededRandom(seed) {
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}
+
 const getResponsiveDimensions = () => {
   const width = window.innerWidth;
   const height = window.innerHeight;
   let cellWidth, cellHeight;
-
   if (width >= 1024) {
-    // Desktop: large screens
     cellWidth = 450;
     cellHeight = 600;
   } else if (width >= 768) {
-    // Medium screens
     cellWidth = 400;
-    cellHeight = Math.round(400 * (600 / 450)); // ~533
+    cellHeight = Math.round(400 * (600 / 450));
   } else if (width >= 500) {
-    // Small screens (but not very small)
     cellWidth = 350;
-    cellHeight = Math.round(350 * (600 / 450)); // ~467
+    cellHeight = Math.round(350 * (600 / 450));
   } else {
-    // Under 500px: adjust for orientation
     if (width < height) {
-      // Portrait
       cellWidth = 300;
-      cellHeight = Math.round(300 * (600 / 450)); // ~400
+      cellHeight = Math.round(300 * (600 / 450));
     } else {
-      // Landscape
       cellWidth = 400;
-      cellHeight = 300; // swapped dimensions for landscape look
+      cellHeight = 300;
     }
   }
   return { cellWidth, cellHeight };
 };
 
 const Test = ({ data }) => {
-  // Define the gap between cards.
   const GAP = 15;
-
-  // State for responsive cell dimensions and window size.
   const [dimensions, setDimensions] = useState(getResponsiveDimensions());
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
   });
+  
+  // Randomize the provided data globally.
+  const [shuffledData, setShuffledData] = useState(() => randomizeData(data));
+  useEffect(() => {
+    setShuffledData(randomizeData(data));
+  }, [data]);
 
-  const columns = 10000;
-  const rows = 10000;
+  const columns = 1000;
+  const rows = 1000;
   const containerRef = useRef(null);
   const lastScrollTop = useRef(0);
   const lastScrollLeft = useRef(0);
+  const ticking = useRef(false);
 
-  // Update dimensions and window size on resize.
+  // Update dimensions on window resize.
   useEffect(() => {
     const handleResize = () => {
       setDimensions(getResponsiveDimensions());
@@ -70,11 +82,10 @@ const Test = ({ data }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Center the scroll position on mount or when window size/dimensions change.
+  // Center scroll on mount or when window/dimensions change.
   useEffect(() => {
     if (containerRef.current) {
-      const { clientWidth, clientHeight, scrollWidth, scrollHeight } =
-        containerRef.current;
+      const { clientWidth, clientHeight, scrollWidth, scrollHeight } = containerRef.current;
       const centerX = (scrollWidth - clientWidth) / 2;
       const centerY = (scrollHeight - clientHeight) / 2;
       containerRef.current.scrollLeft = centerX;
@@ -84,12 +95,12 @@ const Test = ({ data }) => {
     }
   }, [windowSize, dimensions]);
 
-  // Handle scroll: animate card width based on vertical scroll speed and image height based on horizontal scroll.
-  const handleScroll = () => {
+  // Update animations (vertical/horizontal shrink and recentering).
+  const updateAnimations = () => {
     const container = containerRef.current;
     if (!container) return;
 
-    // --- Vertical Scroll Animation (Shrink card width) ---
+    // Vertical shrink.
     const scrollTop = container.scrollTop;
     const deltaY = Math.abs(scrollTop - lastScrollTop.current);
     const newScaleX = 1 - Math.min(deltaY / 300, 0.07);
@@ -98,8 +109,8 @@ const Test = ({ data }) => {
       duration: 0.1,
       ease: "power1.out",
     });
-    clearTimeout(handleScroll.resetTimeout);
-    handleScroll.resetTimeout = setTimeout(() => {
+    clearTimeout(updateAnimations.resetTimeout);
+    updateAnimations.resetTimeout = setTimeout(() => {
       gsap.to(".gallery-card", {
         scaleX: 1,
         duration: 0.2,
@@ -108,7 +119,7 @@ const Test = ({ data }) => {
     }, 150);
     lastScrollTop.current = scrollTop;
 
-    // --- Horizontal Scroll Animation (Shrink image height) ---
+    // Horizontal shrink.
     const currentScrollLeft = container.scrollLeft;
     const deltaX = Math.abs(currentScrollLeft - lastScrollLeft.current);
     const newScaleY = 1 - Math.min(deltaX / 300, 0.03);
@@ -117,8 +128,8 @@ const Test = ({ data }) => {
       duration: 0.1,
       ease: "power1.out",
     });
-    clearTimeout(handleScroll.resetTimeoutHorizontal);
-    handleScroll.resetTimeoutHorizontal = setTimeout(() => {
+    clearTimeout(updateAnimations.resetTimeoutHorizontal);
+    updateAnimations.resetTimeoutHorizontal = setTimeout(() => {
       gsap.to(".gallery-img", {
         scaleY: 1,
         duration: 0.2,
@@ -127,14 +138,12 @@ const Test = ({ data }) => {
     }, 150);
     lastScrollLeft.current = currentScrollLeft;
 
-    // --- Existing recenter logic ---
+    // Center scroll logic.
     const thresholdX = dimensions.cellWidth * 20;
     const thresholdY = dimensions.cellHeight * 20;
-
     if (
       currentScrollLeft < thresholdX ||
-      currentScrollLeft >
-        container.scrollWidth - container.clientWidth - thresholdX
+      currentScrollLeft > container.scrollWidth - container.clientWidth - thresholdX
     ) {
       const centerX = (container.scrollWidth - container.clientWidth) / 2;
       gsap.to(container, {
@@ -146,8 +155,7 @@ const Test = ({ data }) => {
     }
     if (
       scrollTop < thresholdY ||
-      scrollTop >
-        container.scrollHeight - container.clientHeight - thresholdY
+      scrollTop > container.scrollHeight - container.clientHeight - thresholdY
     ) {
       const centerY = (container.scrollHeight - container.clientHeight) / 2;
       gsap.to(container, {
@@ -157,49 +165,70 @@ const Test = ({ data }) => {
       });
       lastScrollTop.current = centerY;
     }
+
+    // Columns parallax.
+    const centerScrollY = (container.scrollHeight - container.clientHeight) / 2;
+    const parallaxCells = container.querySelectorAll(".parallax-cell");
+    parallaxCells.forEach((cell) => {
+      const colIndex = parseInt(cell.getAttribute("data-col-index"), 10);
+      const factor = 0.9 + ((Math.sin(colIndex) + 1) / 2) * 0.2;
+      const parallaxOffsetY = (container.scrollTop - centerScrollY) * (factor - 1);
+      gsap.to(cell, {
+        y: parallaxOffsetY,
+        duration: 0.1,
+        ease: "power1.out",
+      });
+    });
   };
 
-  // Render a cell, wrapping content to simulate a 15px gap.
-  const renderCell = ({ columnIndex, rowIndex, style }) => {
-    // Adjust style: our grid cell is now larger by GAP pixels.
-    const adjustedStyle = { ...style };
+  // Throttle scroll events.
+  const handleScroll = () => {
+    if (!ticking.current) {
+      requestAnimationFrame(() => {
+        updateAnimations();
+        ticking.current = false;
+      });
+      ticking.current = true;
+    }
+  };
 
-    // Calculate index for the data.
-    const index =
-      (((rowIndex * columns + columnIndex) % data.length) + data.length) %
-      data.length;
-    const item = data[index];
+  // For each cell, use a seeded random value (based on row and column) to pick an element from the shuffled data.
+  const renderCell = useCallback(
+    ({ columnIndex, rowIndex, style }) => {
+      const adjustedStyle = { ...style };
+      const seed = rowIndex * columns + columnIndex;
+      const randomValue = seededRandom(seed);
+      const index = Math.floor(randomValue * shuffledData.length);
+      const item = shuffledData[index];
 
-    return (
-      // The outer div uses the provided style.
-      <div style={adjustedStyle}>
-        {/* Inner wrapper adds half the GAP as margin on all sides */}
-        <div
-          style={{
-            margin: GAP / 2,
-            width: "100%",
-            height: "100%",
-          }}
-        >
-          {/* The card itself fills the inner container */}
-          <div className="gallery-card" style={{ width: "100%", height: "100%" }}>
-            <img
-              src={item.thumbnail}
-              alt={item.title}
-              className="gallery-img"
-              loading="lazy"
-            />
+      return (
+        <div style={adjustedStyle}>
+          <div
+            className="parallax-cell"
+            data-col-index={columnIndex}
+            style={{ width: "100%", height: "100%" }}
+          >
+            <div style={{ margin: GAP / 2, width: "100%", height: "100%" }}>
+              <div className="gallery-card" style={{ width: "100%", height: "100%" }}>
+                <img
+                  src={item.thumbnail}
+                  alt={item.title}
+                  className="gallery-img"
+                  loading="lazy"
+                />
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    );
-  };
+      );
+    },
+    [shuffledData, columns]
+  );
 
   return (
     <Grid
       columnCount={columns}
       rowCount={rows}
-      
       columnWidth={dimensions.cellWidth + GAP}
       rowHeight={dimensions.cellHeight + GAP}
       height={windowSize.height}
@@ -207,6 +236,7 @@ const Test = ({ data }) => {
       className="gallery-grid"
       outerRef={containerRef}
       onScroll={handleScroll}
+      itemKey={({ columnIndex, rowIndex }) => rowIndex * columns + columnIndex}
     >
       {renderCell}
     </Grid>

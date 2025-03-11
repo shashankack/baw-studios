@@ -19,7 +19,6 @@
   transition: transform 0.3s ease;
 }
 
-/* For screens up to 1024px */
 @media only screen and (max-width: 1024px) {
   .gallery-card {
     width: 400px;
@@ -27,7 +26,6 @@
   }
 }
 
-/* For screens between 501px and 768px */
 @media only screen and (max-width: 768px) and (min-width: 501px) {
   .gallery-card {
     width: 350px;
@@ -35,7 +33,6 @@
   }
 }
 
-/* For screens up to 500px in portrait orientation */
 @media only screen and (max-width: 500px) and (orientation: portrait) {
   .gallery-card {
     width: 300px;
@@ -43,10 +40,9 @@
   }
 }
 
-/* For screens up to 500px in landscape orientation */
 @media only screen and (max-width: 500px) and (orientation: landscape) {
   .gallery-card {
     width: 400px;
-    height: 300px; // Swap dimensions for a landscape look
+    height: 300px;
   }
 }
